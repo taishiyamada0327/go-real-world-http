@@ -6,20 +6,27 @@ import (
 	"net/http"
 )
 
-func main() {
-	resp, err := http.Get("http://localhost:18888")
-	if err != nil {
-		panic(err)
-	}
+// Http Get query
+// func main() {
+// 	values := url.Values{
+// 		"query": {"hello world"},
+// 	}
 
-	defer resp.Body.Close()
-	body, err := io.ReadAll(resp.Body)
+// 	resp, _ := http.Get("http://localhost:18888" + "?" + values.Encode())
+// 	defer resp.Body.Close()
+// 	body, _ := io.ReadAll(resp.Body)
+// 	log.Println(string(body))
+// 	log.Println("Fields :", resp.Header)
+// }
+
+// Http HEAD
+func main() {
+	resp, err := http.Head("http://localhost:18888")
 	if err != nil {
 		panic(err)
 	}
+	body, _ := io.ReadAll(resp.Body)
 	log.Println((string(body)))
-	log.Println("Status: ", resp.Status)
-	log.Println("StatusCode : ", resp.StatusCode)
-	log.Println("Fields :", resp.Header)
-	log.Println("Cotent-Length :", resp.Header.Get("Content-Length"))
+	log.Println("Status :", resp.Status)
+	log.Println("Headers : ", resp.Header)
 }
